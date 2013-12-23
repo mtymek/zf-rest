@@ -106,7 +106,9 @@ First, let's create a route. In our module's configuration file, usually
             'type' => 'Literal',
             'options' => array(
                 'route' => '/paste',
-                'controller' => 'Paste\PasteController', // for the web UI
+                'defaults' => array(
+                    'controller' => 'Paste\PasteController', // for the web UI
+                ),
             ),
             'may_terminate' => true,
             'child_routes' => array(
@@ -114,7 +116,9 @@ First, let's create a route. In our module's configuration file, usually
                     'type' => 'Segment',
                     'options' => array(
                         'route'      => '/api/pastes[/:id]',
-                        'controller' => 'Paste\ApiController',
+                        'defaults' => array(
+                            'controller' => 'Paste\ApiController',
+                        ),
                     ),
                 ),
             ),
@@ -134,17 +138,15 @@ key and its ``resources`` subkey.
     :linenos:
 
     'zf-rest' => array(
-        'resources' => array(
-            'Paste\ApiController' => array(
-                'identifier'              => 'Pastes',
-                'listener'                => 'Paste\PasteResourceListener',
-                'resource_identifiers'    => array('PasteResource'),
-                'collection_http_options' => array('get', 'post'),
-                'collection_name'         => 'pastes',
-                'page_size'               => 10,
-                'resource_http_options'   => array('get'),
-                'route_name'              => 'paste/api',
-            ),
+        'Paste\ApiController' => array(
+            'identifier'              => 'Pastes',
+            'listener'                => 'Paste\PasteResourceListener',
+            'resource_identifiers'    => array('PasteResource'),
+            'collection_http_options' => array('get', 'post'),
+            'collection_name'         => 'pastes',
+            'page_size'               => 10,
+            'resource_http_options'   => array('get'),
+            'route_name'              => 'paste/api',
         ),
     ),
 
